@@ -31,6 +31,7 @@ let platformWidth = DEFAULT_PLATFORM_WIDTH * scale;
 let platformHeight = DEFAULT_PLATFORM_HEIGHT * scale;
 let minPlatformDistance = MIN_PLATFORM_DIFFERENCE * scale;
 let maxPlatformDistance = MAX_PLATFORM_DIFFERENCE * scale;
+let platformSpeed = PLATFORM_SPEED * scale;
 
 let score = 0;
 let maxScore = 0;

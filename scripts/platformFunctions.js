@@ -2,11 +2,18 @@
  * Create a platform above last platform and adds it to platform array
  */
 function createPlatform() {
+  const isMoving = getRandomNum() < 0.15 ? true : false;
   const platformX = Math.floor(getRandomNum(0, canvas.width - platformWidth));
   const platformY =
     platformArray[platformArray.length - 1].y -
     getRandomNum(minPlatformDistance, maxPlatformDistance);
-  platform = new Platform(platformX, platformY, platformWidth, platformHeight);
+  platform = new Platform(
+    platformX,
+    platformY,
+    platformWidth,
+    platformHeight,
+    isMoving
+  );
   platformArray.push(platform);
 }
 

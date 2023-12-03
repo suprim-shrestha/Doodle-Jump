@@ -8,6 +8,12 @@ const platformPositions = {
     width: 114,
     height: 30,
   },
+  movingPlatform: {
+    x: 2,
+    y: 36,
+    width: 114,
+    height: 30,
+  },
 };
 
 class Platform {
@@ -18,13 +24,20 @@ class Platform {
    * @param {number} width
    * @param {number} height
    */
-  constructor(x, y, width, height) {
+  constructor(x, y, width, height, isMoving = false) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
+    this.isMoving = isMoving;
 
-    this.platformPosition = platformPositions.staticPlatform;
+    if (this.isMoving) {
+      this.platformPosition = platformPositions.movingPlatform;
+      this.vx = platformSpeed;
+    } else {
+      this.platformPosition = platformPositions.staticPlatform;
+      this.vx = 0;
+    }
   }
 
   /**
@@ -44,5 +57,15 @@ class Platform {
       this.width,
       this.height
     );
+    if (this.isMoving) {
+      this.move();
+    }
+  }
+
+  move() {
+    if (this.x <= 10 || this.x + this.width >= canvas.width - 10) {
+      this.vx *= -1;
+    }
+    this.x += this.vx;
   }
 }
