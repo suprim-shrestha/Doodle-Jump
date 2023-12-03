@@ -1,5 +1,8 @@
 const image = new Image();
-image.src = "./assets/lik-left.png";
+let imagePath = "./assets/";
+let spriteDirection = "left";
+let spriteAction = "";
+let imageExtension = ".png";
 
 class Doodler {
   constructor(x, y, width, height) {
@@ -7,18 +10,23 @@ class Doodler {
     this.y = y;
     this.width = width;
     this.height = height;
-
-    this.color = "#49c";
-
     this.vx = 0;
     this.vy = -JUMP_HEIGHT;
   }
 
   draw(ctx) {
-    // ctx.fillStyle = this.color;
-    // ctx.fillRect(this.x, this.y, this.width, this.height);
-
-    ctx.drawImage(image, this.x, this.y, this.width, this.height);
+    image.src = imagePath + spriteDirection + spriteAction + imageExtension;
+    ctx.drawImage(
+      image,
+      0,
+      0,
+      image.width,
+      image.height,
+      this.x,
+      this.y,
+      image.width,
+      image.height
+    );
     this.x += this.vx;
 
     this.move();
@@ -26,10 +34,19 @@ class Doodler {
   }
 
   move() {
-    if (keys.left || keys.right) {
-      this.vx = keys.left ? -SPEED : SPEED;
+    if (keys.left) {
+      this.vx = -SPEED;
+      spriteDirection = "left";
+    } else if (keys.right) {
+      this.vx = SPEED;
+      spriteDirection = "right";
     } else {
       this.vx = 0;
+    }
+    if (this.vy < 0) {
+      spriteAction = "-jump";
+    } else {
+      spriteAction = "";
     }
     if (this.x + this.width <= 0) {
       this.x = canvas.width;
