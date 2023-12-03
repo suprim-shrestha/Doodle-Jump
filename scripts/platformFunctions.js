@@ -1,7 +1,21 @@
+let platformsSinceLastSpring = 0;
+let hasSpring = false;
+
 /**
  * Create a platform above last platform and adds it to platform array
  */
 function createPlatform() {
+  // Condition for platform to have spring
+  if (
+    platformsSinceLastSpring > 10 &&
+    getRandomNum() < SPRING_PLATFORM_CHANCE
+  ) {
+    hasSpring = true;
+    platformsSinceLastSpring = 0;
+  } else {
+    platformsSinceLastSpring++;
+    hasSpring = false;
+  }
   const isMoving = getRandomNum() < movingPlatformChance ? true : false;
   const platformX = Math.floor(getRandomNum(0, canvas.width - platformWidth));
   const platformY =
@@ -12,7 +26,8 @@ function createPlatform() {
     platformY,
     platformWidth,
     platformHeight,
-    isMoving
+    isMoving,
+    hasSpring
   );
   platformArray.push(platform);
 }

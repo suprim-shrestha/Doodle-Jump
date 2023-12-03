@@ -95,5 +95,14 @@ class Doodler {
     if (detectPlatformCollision(this, platform) && this.vy > 0) {
       this.vy = -this.jumpHeight;
     }
+    // Check collision with spring
+    if (
+      platform.hasSpring &&
+      detectPlatformCollision(this, platform.spring) &&
+      this.vy > 0
+    ) {
+      platform.spring.changeToExtended = true;
+      this.vy = -JUMP_HEIGHT * 2 * scale;
+    }
   }
 }

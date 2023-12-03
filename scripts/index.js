@@ -1,6 +1,10 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+// Store game sprites
+const gameSprites = new Image();
+gameSprites.src = "./assets/game-tiles.png";
+
 // Get body's width and height and calculate scale
 let bodyWidth = window.innerWidth;
 let bodyHeight = window.innerHeight;
@@ -33,6 +37,10 @@ let minPlatformDistance = MIN_PLATFORM_DIFFERENCE * scale;
 let maxPlatformDistance = MAX_PLATFORM_DIFFERENCE * scale;
 let platformSpeed = PLATFORM_SPEED * scale;
 let movingPlatformChance = DEFAULT_MOVING_PLATFORM_CHANCE;
+
+// Spring size
+let springWidth = DEFAULT_SPRING_WIDTH * scale;
+let springHeight = DEFAULT_SPRING_HEIGHT * scale;
 
 let score = 0;
 let maxScore = 0;
@@ -130,6 +138,9 @@ function animate(currentTime) {
       if (doodler.vy < 0 && doodler.y <= canvas.height * 0.5) {
         platformArray.forEach((platform) => {
           platform.y -= doodler.vy;
+          if (platform.hasSpring) {
+            platform.spring.y -= doodler.vy;
+          }
         });
         doodler.y = canvas.height * 0.5;
       }
