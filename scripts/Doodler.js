@@ -1,5 +1,5 @@
 const image = new Image();
-image.src = "./../assets/lik-left.png";
+image.src = "./assets/lik-left.png";
 
 class Doodler {
   constructor(x, y, width, height) {
