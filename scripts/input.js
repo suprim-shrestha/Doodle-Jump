@@ -48,10 +48,10 @@ window.addEventListener("deviceorientation", handleOrientation);
 
 function handleOrientation(e) {
   var tiltValue = e.gamma;
-  if (tiltValue > 20) {
+  if (tiltValue > 10) {
     keys.right = true;
     keys.left = false;
-  } else if (tiltValue < -20) {
+  } else if (tiltValue < -10) {
     keys.left = true;
     keys.right = false;
   } else {
