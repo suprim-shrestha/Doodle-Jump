@@ -1,6 +1,15 @@
 const platformImage = new Image();
 platformImage.src = "./assets/game-tiles.png";
 
+const platformPositions = {
+  staticPlatform: {
+    x: 2,
+    y: 2,
+    width: 114,
+    height: 30,
+  },
+};
+
 class Platform {
   /**
    *
@@ -15,7 +24,7 @@ class Platform {
     this.width = width;
     this.height = height;
 
-    this.color = "#333";
+    this.platformPosition = platformPositions.staticPlatform;
   }
 
   /**
@@ -26,10 +35,10 @@ class Platform {
   draw(ctx) {
     ctx.drawImage(
       platformImage,
-      1,
-      1,
-      DEFAULT_PLATFORM_WIDTH,
-      DEFAULT_PLATFORM_HEIGHT,
+      this.platformPosition.x,
+      this.platformPosition.y,
+      this.platformPosition.width,
+      this.platformPosition.height,
       this.x,
       this.y,
       this.width,

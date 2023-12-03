@@ -8,4 +8,6 @@
   margin: 0 auto;
   border: 1px solid black;
   background: url(../assets/bck.png);
+  background-position: center;
+  background-size: contain;
 }
