@@ -36,13 +36,13 @@ window.onkeyup = (e) => {
   }
 };
 
-window.onmousedown = () => {
+window.addEventListener("touchstart", () => {
   keys.SPACE = true;
-};
+});
 
-window.onmouseup = () => {
+window.addEventListener("touchend", () => {
   keys.SPACE = false;
-};
+});
 
 window.addEventListener("deviceorientation", handleOrientation);
 
