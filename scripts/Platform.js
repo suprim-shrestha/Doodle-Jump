@@ -63,7 +63,7 @@ class Platform {
   }
 
   move() {
-    if (this.x <= 10 || this.x + this.width >= canvas.width - 10) {
+    if (this.x <= 0 || this.x + this.width >= canvas.width - 0) {
       this.vx *= -1;
     }
     this.x += this.vx;

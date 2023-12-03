@@ -32,6 +32,7 @@ let platformHeight = DEFAULT_PLATFORM_HEIGHT * scale;
 let minPlatformDistance = MIN_PLATFORM_DIFFERENCE * scale;
 let maxPlatformDistance = MAX_PLATFORM_DIFFERENCE * scale;
 let platformSpeed = PLATFORM_SPEED * scale;
+let movingPlatformChance = DEFAULT_MOVING_PLATFORM_CHANCE;
 
 let score = 0;
 let maxScore = 0;
@@ -48,6 +49,8 @@ function resetGame() {
   doodler.y = doodlerY;
   doodler.vy = -doodlerJumpHeight;
   platformArray = [];
+  minPlatformDistance = MIN_PLATFORM_DIFFERENCE * scale;
+  movingPlatformChance = DEFAULT_MOVING_PLATFORM_CHANCE;
   createInitialPlatforms();
 }
 
@@ -65,6 +68,27 @@ function updateScore() {
     }
   } else if (doodler.vy >= 0) {
     maxScore -= points;
+  }
+  updateDifficulty();
+}
+
+function updateDifficulty() {
+  if (score > 8000) {
+    minPlatformDistance = (MIN_PLATFORM_DIFFERENCE + 55) * scale;
+    movingPlatformChance = 0.4;
+  } else if (score > 7000) {
+    minPlatformDistance = (MIN_PLATFORM_DIFFERENCE + 50) * scale;
+    movingPlatformChance = 0.3;
+  } else if (score > 5000) {
+    minPlatformDistance = (MIN_PLATFORM_DIFFERENCE + 40) * scale;
+    movingPlatformChance = 0.25;
+  } else if (score > 3000) {
+    minPlatformDistance = (MIN_PLATFORM_DIFFERENCE + 30) * scale;
+    movingPlatformChance = 0.2;
+  } else if (score > 2000) {
+    minPlatformDistance = (MIN_PLATFORM_DIFFERENCE + 20) * scale;
+  } else if (score > 1000) {
+    minPlatformDistance = (MIN_PLATFORM_DIFFERENCE + 10) * scale;
   }
 }
 
