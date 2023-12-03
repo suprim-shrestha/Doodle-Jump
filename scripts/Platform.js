@@ -1,5 +1,5 @@
 const platformImage = new Image();
-platformImage.src = "../assets/game-tiles.png";
+platformImage.src = "./../assets/game-tiles.png";
 
 class Platform {
   constructor(x, y, width, height) {
