@@ -1,0 +1,6 @@
+.canvas {
+  display: block;
+  margin: 20px auto;
+  border: 1px solid black;
+  background: url(../assets/bck.png);
+}
