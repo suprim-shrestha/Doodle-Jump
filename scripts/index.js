@@ -7,6 +7,7 @@ let bodyHeight = window.innerHeight;
 canvas.width = bodyWidth > MAX_WIDTH ? MAX_WIDTH : bodyWidth;
 canvas.height = bodyHeight;
 let scale = canvas.width / DEFAULT_WIDTH;
+let scoreScale = canvas.height / DEFAULT_HEIGHT;
 let gravity = GRAVITY * scale;
 
 // Doodler's default size and position
@@ -55,7 +56,7 @@ resetGame();
  * Update score based on the maximum height reached
  */
 function updateScore() {
-  let points = Math.floor(getRandomNum(0, 10));
+  let points = Math.floor(getRandomNum(0, 10 * scoreScale));
   if (doodler.vy < 0) {
     maxScore += points;
     if (score < maxScore) {

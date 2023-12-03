@@ -9,6 +9,7 @@ const FRAME_RATE = 60;
 // Default values
 const MAX_WIDTH = 640;
 const DEFAULT_WIDTH = 320;
+const DEFAULT_HEIGHT = 512;
 const DEFAULT_DOODLER_WIDTH = 46;
 const DEFAULT_DOODLER_HEIGHT = 45;
 const DEFAULT_PLATFORM_WIDTH = 57;
