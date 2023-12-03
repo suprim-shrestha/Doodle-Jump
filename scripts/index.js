@@ -12,6 +12,8 @@ let platformArray = [];
 let platformWidth = 57;
 let platformHeight = 15;
 
+let score = 0;
+let maxScore = 0;
 let gameOver = false;
 
 function createPlatform() {
@@ -42,6 +44,8 @@ function createNewPlatforms() {
 }
 
 function resetGame() {
+  score = 0;
+  maxScore = 0;
   gameOver = false;
   doodler.x = doodlerX;
   doodler.y = doodlerY;
@@ -52,6 +56,18 @@ function resetGame() {
 
 resetGame();
 
+function updateScore() {
+  let points = Math.floor(getRandomNum(0, 10));
+  if (doodler.vy < 0) {
+    maxScore += points;
+    if (score < maxScore) {
+      score = maxScore;
+    }
+  } else if (doodler.vy >= 0) {
+    maxScore -= points;
+  }
+}
+
 let lastRenderTime = 0;
 let frameDuration = 1000 / FRAME_RATE;
 function animate(currentTime) {
@@ -61,12 +77,15 @@ function animate(currentTime) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     if (gameOver) {
-      ctx.fillStyle = "black";
-      ctx.font = "16px sans-serif";
+      ctx.fillText(
+        `Score: ${score}`,
+        (canvas.width * 2) / 5,
+        (canvas.height * 2) / 5
+      );
       ctx.fillText(
         "Game Over: Press 'Space' to Restart",
         canvas.width / 10,
-        canvas.height / 2
+        (canvas.height * 3) / 5
       );
       if (keys.SPACE) {
         resetGame();
@@ -88,6 +107,10 @@ function animate(currentTime) {
         platformArray.shift();
       }
       createNewPlatforms();
+      updateScore();
+      ctx.fillStyle = "black";
+      ctx.font = "16px Arial";
+      ctx.fillText(score, 5, 20);
     }
   }
 
