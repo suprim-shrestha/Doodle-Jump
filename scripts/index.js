@@ -12,6 +12,8 @@ let platformArray = [];
 let platformWidth = 57;
 let platformHeight = 15;
 
+let gameOver = false;
+
 function createPlatform() {
   const platformX = Math.floor(getRandomNum(0, canvas.width - platformWidth));
   const platformY =
@@ -33,13 +35,22 @@ function createInitialPlatforms() {
   }
 }
 
-createInitialPlatforms();
-
 function createNewPlatforms() {
   if (platformArray[platformArray.length - 1].y >= 0) {
     createPlatform();
   }
 }
+
+function resetGame() {
+  gameOver = false;
+  doodler.x = doodlerX;
+  doodler.y = doodlerY;
+  doodler.vy = -JUMP_HEIGHT;
+  platformArray = [];
+  createInitialPlatforms();
+}
+
+resetGame();
 
 let lastRenderTime = 0;
 let frameDuration = 1000 / FRAME_RATE;
@@ -49,22 +60,35 @@ function animate(currentTime) {
     lastRenderTime = currentTime - (timeSinceLastRender % frameDuration);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    platformArray.forEach((platform) => {
-      platform.draw(ctx);
-      doodler.checkPlatformCollision(platform);
-    });
-
-    doodler.draw(ctx);
-    if (doodler.vy < 0 && doodler.y <= canvas.height * 0.5) {
+    if (gameOver) {
+      ctx.fillStyle = "black";
+      ctx.font = "16px sans-serif";
+      ctx.fillText(
+        "Game Over: Press 'Space' to Restart",
+        canvas.width / 10,
+        canvas.height / 2
+      );
+      if (keys.SPACE) {
+        resetGame();
+      }
+    } else {
       platformArray.forEach((platform) => {
-        platform.y -= doodler.vy;
+        platform.draw(ctx);
+        doodler.checkPlatformCollision(platform);
       });
-      doodler.y = canvas.height * 0.5;
+
+      doodler.draw(ctx);
+      if (doodler.vy < 0 && doodler.y <= canvas.height * 0.5) {
+        platformArray.forEach((platform) => {
+          platform.y -= doodler.vy;
+        });
+        doodler.y = canvas.height * 0.5;
+      }
+      if (platformArray[0].y >= canvas.height) {
+        platformArray.shift();
+      }
+      createNewPlatforms();
     }
-    if (platformArray[0].y >= canvas.height) {
-      platformArray.shift();
-    }
-    createNewPlatforms();
   }
 
   requestAnimationFrame(animate);

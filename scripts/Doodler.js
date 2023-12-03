@@ -36,6 +36,9 @@ class Doodler {
     } else if (this.x >= canvas.width) {
       this.x = -this.width;
     }
+    if (this.y >= canvas.height) {
+      gameOver = true;
+    }
   }
 
   applyGravity() {
