@@ -13,13 +13,14 @@ class Doodler {
    * @param {number} width
    * @param {number} height
    */
-  constructor(x, y, width, height) {
+  constructor(x, y, width, height, jumpHeight) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
+    this.jumpHeight = jumpHeight;
     this.vx = 0;
-    this.vy = -JUMP_HEIGHT;
+    this.vy = -this.jumpHeight;
   }
 
   /**
@@ -37,8 +38,8 @@ class Doodler {
       image.height,
       this.x,
       this.y,
-      image.width,
-      image.height
+      this.width,
+      this.height
     );
 
     this.move();
@@ -81,7 +82,7 @@ class Doodler {
   }
 
   applyGravity() {
-    this.vy += GRAVITY;
+    this.vy += gravity;
     this.y += this.vy;
   }
 
@@ -92,7 +93,7 @@ class Doodler {
    */
   checkPlatformCollision(platform) {
     if (detectPlatformCollision(this, platform) && this.vy > 0) {
-      this.vy = -JUMP_HEIGHT;
+      this.vy = -this.jumpHeight;
     }
   }
 }

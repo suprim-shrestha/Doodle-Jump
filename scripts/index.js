@@ -1,18 +1,35 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+// Get body's width and height and calculate scale
+let bodyWidth = window.innerWidth;
+let bodyHeight = window.innerHeight;
+canvas.width = bodyWidth > MAX_WIDTH ? MAX_WIDTH : bodyWidth;
+canvas.height = bodyHeight;
+let scale = bodyWidth / DEFAULT_WIDTH;
+let gravity = GRAVITY * scale;
+
 // Doodler's default size and position
-let doodlerWidth = 46;
-let doodlerHeight = 45;
+let doodlerWidth = DEFAULT_DOODLER_WIDTH * scale;
+let doodlerHeight = DEFAULT_DOODLER_HEIGHT * scale;
 let doodlerX = canvas.width / 2 - doodlerWidth / 2;
 let doodlerY = (canvas.height * 7) / 8 - doodlerHeight;
+let doodlerJumpHeight = JUMP_HEIGHT * scale;
 
-const doodler = new Doodler(doodlerX, doodlerY, doodlerWidth, doodlerHeight);
+const doodler = new Doodler(
+  doodlerX,
+  doodlerY,
+  doodlerWidth,
+  doodlerHeight,
+  doodlerJumpHeight
+);
 
 // Platform's default size
 let platformArray = [];
-let platformWidth = 57;
-let platformHeight = 15;
+let platformWidth = DEFAULT_PLATFORM_WIDTH * scale;
+let platformHeight = DEFAULT_PLATFORM_HEIGHT * scale;
+let minPlatformDistance = MIN_PLATFORM_DIFFERENCE * scale;
+let maxPlatformDistance = MAX_PLATFORM_DIFFERENCE * scale;
 
 let score = 0;
 let maxScore = 0;
@@ -24,7 +41,8 @@ let gameOver = false;
 function createPlatform() {
   const platformX = Math.floor(getRandomNum(0, canvas.width - platformWidth));
   const platformY =
-    platformArray[platformArray.length - 1].y - getRandomNum(30, 90);
+    platformArray[platformArray.length - 1].y -
+    getRandomNum(minPlatformDistance, maxPlatformDistance);
   platform = new Platform(platformX, platformY, platformWidth, platformHeight);
   platformArray.push(platform);
 }
@@ -63,7 +81,7 @@ function resetGame() {
   gameOver = false;
   doodler.x = doodlerX;
   doodler.y = doodlerY;
-  doodler.vy = -JUMP_HEIGHT;
+  doodler.vy = -doodlerJumpHeight;
   platformArray = [];
   createInitialPlatforms();
 }
