@@ -93,6 +93,7 @@ class Doodler {
    */
   checkPlatformCollision(platform) {
     if (detectPlatformCollision(this, platform) && this.vy > 0) {
+      this.y = platform.y - this.height;
       this.vy = -this.jumpHeight;
     }
     // Check collision with spring
