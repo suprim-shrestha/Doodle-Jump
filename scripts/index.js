@@ -6,7 +6,7 @@ let bodyWidth = window.innerWidth;
 let bodyHeight = window.innerHeight;
 canvas.width = bodyWidth > MAX_WIDTH ? MAX_WIDTH : bodyWidth;
 canvas.height = bodyHeight;
-let scale = bodyWidth / DEFAULT_WIDTH;
+let scale = canvas.width / DEFAULT_WIDTH;
 let gravity = GRAVITY * scale;
 
 // Doodler's default size and position
