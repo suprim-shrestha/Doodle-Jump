@@ -23,14 +23,24 @@ class Platform {
    * @param {number} height
    * @param {boolean} isMoving
    * @param {boolean} hasSpring
+   * @param {boolean} hasTrampoline
    */
-  constructor(x, y, width, height, isMoving = false, hasSpring = false) {
+  constructor(
+    x,
+    y,
+    width,
+    height,
+    isMoving = false,
+    hasSpring = false,
+    hasTrampoline = false
+  ) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
     this.isMoving = isMoving;
     this.hasSpring = hasSpring;
+    this.hasTrampoline = hasTrampoline;
 
     // Set speed for moving platform
     if (this.isMoving) {
@@ -48,6 +58,13 @@ class Platform {
       );
       const springY = this.y - springHeight;
       this.spring = new Spring(springX, springY);
+    }
+
+    // Create new Trampoline object
+    if (this.hasTrampoline) {
+      const trampolineX = this.x + this.width / 2 - trampolineWidth / 2;
+      const trampolineY = this.y - trampolineHeight;
+      this.trampoline = new Trampoline(trampolineX, trampolineY);
     }
   }
 
@@ -74,6 +91,9 @@ class Platform {
     if (this.hasSpring) {
       this.spring.draw(ctx);
     }
+    if (this.hasTrampoline) {
+      this.trampoline.draw(ctx);
+    }
   }
 
   move() {
@@ -83,6 +103,9 @@ class Platform {
     this.x += this.vx;
     if (this.hasSpring) {
       this.spring.x += this.vx;
+    }
+    if (this.hasTrampoline) {
+      this.trampoline.x += this.vx;
     }
   }
 }

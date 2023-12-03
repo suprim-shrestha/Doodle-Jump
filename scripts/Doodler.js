@@ -103,6 +103,13 @@ class Doodler {
     ) {
       platform.spring.changeToExtended = true;
       this.vy = -JUMP_HEIGHT * 2 * scale;
+    } else if (
+      platform.hasTrampoline &&
+      detectPlatformCollision(this, platform.trampoline) &&
+      this.vy > 0
+    ) {
+      platform.trampoline.changeToExtended = true;
+      this.vy = -JUMP_HEIGHT * 3.5 * scale;
     }
   }
 }

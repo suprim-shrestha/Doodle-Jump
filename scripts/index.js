@@ -42,6 +42,10 @@ let movingPlatformChance = DEFAULT_MOVING_PLATFORM_CHANCE;
 let springWidth = DEFAULT_SPRING_WIDTH * scale;
 let springHeight = DEFAULT_SPRING_HEIGHT * scale;
 
+// Trampoline size
+let trampolineWidth = DEFAULT_TRAMPOLINE_WIDTH * scale;
+let trampolineHeight = DEFAULT_TRAMPOLINE_HEIGHT * scale;
+
 let score = 0;
 let maxScore = 0;
 let gameOver = false;
@@ -140,6 +144,9 @@ function animate(currentTime) {
           platform.y -= doodler.vy;
           if (platform.hasSpring) {
             platform.spring.y -= doodler.vy;
+          }
+          if (platform.hasTrampoline) {
+            platform.trampoline.y -= doodler.vy;
           }
         });
         doodler.y = canvas.height * 0.5;

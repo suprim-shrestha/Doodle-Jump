@@ -1,5 +1,7 @@
 let platformsSinceLastSpring = 0;
 let hasSpring = false;
+let platformsSinceLastTrampoline = 0;
+let hasTrampoline = false;
 
 /**
  * Create a platform above last platform and adds it to platform array
@@ -11,10 +13,20 @@ function createPlatform() {
     getRandomNum() < SPRING_PLATFORM_CHANCE
   ) {
     hasSpring = true;
+    hasTrampoline = false;
     platformsSinceLastSpring = 0;
+  } else if (
+    platformsSinceLastTrampoline > 40 &&
+    getRandomNum() < TRAMPOLINE_PLATFORM_CHANCE
+  ) {
+    hasTrampoline = true;
+    hasSpring = false;
+    platformsSinceLastTrampoline = 0;
   } else {
     platformsSinceLastSpring++;
+    platformsSinceLastTrampoline++;
     hasSpring = false;
+    hasTrampoline = false;
   }
   const isMoving = getRandomNum() < movingPlatformChance ? true : false;
   const platformX = Math.floor(getRandomNum(0, canvas.width - platformWidth));
@@ -27,7 +39,8 @@ function createPlatform() {
     platformWidth,
     platformHeight,
     isMoving,
-    hasSpring
+    hasSpring,
+    hasTrampoline
   );
   platformArray.push(platform);
 }
