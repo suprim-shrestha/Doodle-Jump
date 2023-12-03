@@ -12,7 +12,15 @@ let platformArray = [];
 let platformWidth = 57;
 let platformHeight = 15;
 
-function createPlatforms() {
+function createPlatform() {
+  const platformX = Math.floor(getRandomNum(0, canvas.width - platformWidth));
+  const platformY =
+    platformArray[platformArray.length - 1].y - getRandomNum(30, 90);
+  platform = new Platform(platformX, platformY, platformWidth, platformHeight);
+  platformArray.push(platform);
+}
+
+function createInitialPlatforms() {
   let platform = new Platform(
     canvas.width / 2 - platformWidth / 2,
     canvas.height - 50,
@@ -21,20 +29,17 @@ function createPlatforms() {
   );
   platformArray.push(platform);
   for (let i = 0; i < 10; i++) {
-    const platformX = Math.floor(getRandomNum(0, canvas.width - platformWidth));
-    const platformY =
-      platformArray[platformArray.length - 1].y - getRandomNum(30, 90);
-    platform = new Platform(
-      platformX,
-      platformY,
-      platformWidth,
-      platformHeight
-    );
-    platformArray.push(platform);
+    createPlatform();
   }
 }
 
-createPlatforms();
+createInitialPlatforms();
+
+function createNewPlatforms() {
+  if (platformArray[platformArray.length - 1].y >= 0) {
+    createPlatform();
+  }
+}
 
 let lastRenderTime = 0;
 let frameDuration = 1000 / FRAME_RATE;
@@ -50,6 +55,16 @@ function animate(currentTime) {
     });
 
     doodler.draw(ctx);
+    if (doodler.vy < 0 && doodler.y <= canvas.height * 0.5) {
+      platformArray.forEach((platform) => {
+        platform.y -= doodler.vy;
+      });
+      doodler.y = canvas.height * 0.5;
+    }
+    if (platformArray[0].y >= canvas.height) {
+      platformArray.shift();
+    }
+    createNewPlatforms();
   }
 
   requestAnimationFrame(animate);
