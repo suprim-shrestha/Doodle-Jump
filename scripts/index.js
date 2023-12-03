@@ -1,6 +1,7 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+// Doodler's default size and position
 let doodlerWidth = 46;
 let doodlerHeight = 45;
 let doodlerX = canvas.width / 2 - doodlerWidth / 2;
@@ -8,6 +9,7 @@ let doodlerY = (canvas.height * 7) / 8 - doodlerHeight;
 
 const doodler = new Doodler(doodlerX, doodlerY, doodlerWidth, doodlerHeight);
 
+// Platform's default size
 let platformArray = [];
 let platformWidth = 57;
 let platformHeight = 15;
@@ -16,6 +18,9 @@ let score = 0;
 let maxScore = 0;
 let gameOver = false;
 
+/**
+ * Create a platform above last platform and adds it to platform array
+ */
 function createPlatform() {
   const platformX = Math.floor(getRandomNum(0, canvas.width - platformWidth));
   const platformY =
@@ -24,6 +29,9 @@ function createPlatform() {
   platformArray.push(platform);
 }
 
+/**
+ * Create first 10 platforms
+ */
 function createInitialPlatforms() {
   let platform = new Platform(
     canvas.width / 2 - platformWidth / 2,
@@ -32,17 +40,23 @@ function createInitialPlatforms() {
     platformHeight
   );
   platformArray.push(platform);
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 9; i++) {
     createPlatform();
   }
 }
 
+/**
+ * Create new platform when last platform is visible on screen
+ */
 function createNewPlatforms() {
   if (platformArray[platformArray.length - 1].y >= 0) {
     createPlatform();
   }
 }
 
+/**
+ * Set all values to default and restarts game
+ */
 function resetGame() {
   score = 0;
   maxScore = 0;
@@ -56,6 +70,9 @@ function resetGame() {
 
 resetGame();
 
+/**
+ * Update score based on the maximum height reached
+ */
 function updateScore() {
   let points = Math.floor(getRandomNum(0, 10));
   if (doodler.vy < 0) {
@@ -68,6 +85,7 @@ function updateScore() {
   }
 }
 
+// Set maximum framerate for higher refresh rate screens
 let lastRenderTime = 0;
 let frameDuration = 1000 / FRAME_RATE;
 function animate(currentTime) {
@@ -76,6 +94,7 @@ function animate(currentTime) {
     lastRenderTime = currentTime - (timeSinceLastRender % frameDuration);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Check for gameOver and display game over screen
     if (gameOver) {
       ctx.fillText(
         `Score: ${score}`,
@@ -91,22 +110,30 @@ function animate(currentTime) {
         resetGame();
       }
     } else {
+      // Draw all platforms from array
       platformArray.forEach((platform) => {
         platform.draw(ctx);
         doodler.checkPlatformCollision(platform);
       });
 
+      // Draw Doodler
       doodler.draw(ctx);
+
+      // Limit doodler's vertical position and instead move platforms downwards
       if (doodler.vy < 0 && doodler.y <= canvas.height * 0.5) {
         platformArray.forEach((platform) => {
           platform.y -= doodler.vy;
         });
         doodler.y = canvas.height * 0.5;
       }
+
+      // Remove platforms outside the screen and create new ones
       if (platformArray[0].y >= canvas.height) {
         platformArray.shift();
       }
       createNewPlatforms();
+
+      // Update and display score
       updateScore();
       ctx.fillStyle = "black";
       ctx.font = "16px Arial";

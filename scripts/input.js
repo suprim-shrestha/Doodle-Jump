@@ -4,6 +4,7 @@ const keys = {
   SPACE: false,
 };
 
+// Event listeners for key presses
 window.onkeydown = (e) => {
   switch (e.code) {
     case "KeyA":
@@ -36,6 +37,7 @@ window.onkeyup = (e) => {
   }
 };
 
+// Touch event listeners for mobile screens to reset game
 window.addEventListener("touchstart", () => {
   keys.SPACE = true;
 });
@@ -44,8 +46,8 @@ window.addEventListener("touchend", () => {
   keys.SPACE = false;
 });
 
+// Tilt event listeners for mobile screens to control the character
 window.addEventListener("deviceorientation", handleOrientation);
-
 function handleOrientation(e) {
   var tiltValue = e.gamma;
   if (tiltValue > 10) {

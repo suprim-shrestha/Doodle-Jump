@@ -2,6 +2,13 @@ const platformImage = new Image();
 platformImage.src = "./assets/game-tiles.png";
 
 class Platform {
+  /**
+   *
+   * @param {number} x
+   * @param {number} y
+   * @param {number} width
+   * @param {number} height
+   */
   constructor(x, y, width, height) {
     this.x = x;
     this.y = y;
@@ -11,10 +18,12 @@ class Platform {
     this.color = "#333";
   }
 
+  /**
+   * Draw platform sprite on screen
+   *
+   * @param {*} ctx
+   */
   draw(ctx) {
-    // ctx.fillStyle = this.color;
-    // ctx.fillRect(this.x, this.y, this.width, this.height);
-
     ctx.drawImage(
       platformImage,
       1,
