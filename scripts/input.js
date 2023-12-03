@@ -35,3 +35,27 @@ window.onkeyup = (e) => {
       break;
   }
 };
+
+window.onmousedown = () => {
+  keys.SPACE = true;
+};
+
+window.onmouseup = () => {
+  keys.SPACE = false;
+};
+
+window.addEventListener("deviceorientation", handleOrientation);
+
+function handleOrientation(e) {
+  var tiltValue = e.gamma;
+  if (tiltValue > 20) {
+    keys.right = true;
+    keys.left = false;
+  } else if (tiltValue < -20) {
+    keys.left = true;
+    keys.right = false;
+  } else {
+    keys.left = false;
+    keys.right = false;
+  }
+}
