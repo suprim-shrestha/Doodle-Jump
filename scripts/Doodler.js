@@ -20,6 +20,9 @@ class Doodler {
 
     ctx.drawImage(image, this.x, this.y, this.width, this.height);
     this.x += this.vx;
+
+    this.move();
+    this.applyGravity();
   }
 
   move() {
@@ -27,6 +30,11 @@ class Doodler {
       this.vx = keys.left ? -SPEED : SPEED;
     } else {
       this.vx = 0;
+    }
+    if (this.x + this.width <= 0) {
+      this.x = canvas.width;
+    } else if (this.x >= canvas.width) {
+      this.x = -this.width;
     }
   }
 
