@@ -115,16 +115,14 @@ function animate(currentTime) {
 
     // Check for gameOver and display game over screen
     if (gameOver) {
-      ctx.fillText(
-        `Score: ${score}`,
-        (canvas.width * 2) / 5,
-        (canvas.height * 2) / 5
-      );
-      ctx.fillText(
-        "Game Over: Press 'Space' to Restart",
-        canvas.width / 10,
-        (canvas.height * 3) / 5
-      );
+      const scoreDisplay = `Score: ${score}`;
+      let textWidth = ctx.measureText(scoreDisplay).width;
+      let textX = (canvas.width - textWidth) / 2;
+      ctx.fillText(scoreDisplay, textX, (canvas.height * 2) / 5);
+      const gameOverDisplay = "Game Over: Press 'Space' to Restart";
+      textWidth = ctx.measureText(gameOverDisplay).width;
+      textX = (canvas.width - textWidth) / 2;
+      ctx.fillText(gameOverDisplay, textX, (canvas.height * 3) / 5);
       if (keys.SPACE) {
         resetGame();
       }
@@ -161,7 +159,7 @@ function animate(currentTime) {
       // Update and display score
       updateScore();
       ctx.fillStyle = "black";
-      ctx.font = "16px Arial";
+      ctx.font = "20px Arial";
       ctx.fillText(score, 5, 20);
     }
   }
