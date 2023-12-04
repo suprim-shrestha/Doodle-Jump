@@ -1,5 +1,5 @@
 // Initialize sprite for doodler
-const image = new Image();
+const doodlerSprite = new Image();
 let imagePath = "./assets/";
 let spriteDirection = "left";
 let spriteAction = "";
@@ -29,13 +29,14 @@ class Doodler {
    * @param {*} ctx
    */
   draw(ctx) {
-    image.src = imagePath + spriteDirection + spriteAction + imageExtension;
+    doodlerSprite.src =
+      imagePath + spriteDirection + spriteAction + imageExtension;
     ctx.drawImage(
-      image,
+      doodlerSprite,
       0,
       0,
-      image.width,
-      image.height,
+      doodlerSprite.width,
+      doodlerSprite.height,
       this.x,
       this.y,
       this.width,

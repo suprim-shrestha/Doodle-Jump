@@ -4,6 +4,7 @@ const ctx = canvas.getContext("2d");
 // Store game sprites
 const gameSprites = new Image();
 gameSprites.src = "./assets/game-tiles.png";
+gameSprites.onload = imageLoaded;
 
 // Get body's width and height and calculate scale
 let bodyWidth = window.innerWidth;
@@ -167,4 +168,28 @@ function animate(currentTime) {
   requestAnimationFrame(animate);
 }
 
-animate();
+// Preload all images
+const doodlerSpritePaths = [
+  "./assets/left.png",
+  "./assets/right.png",
+  "./assets/left-jump.png",
+  "./assets/right-jump.png",
+];
+let imagesLoaded = 0;
+
+function preloadImages() {
+  doodlerSpritePaths.forEach((sprite) => {
+    const image = new Image();
+    image.src = sprite;
+    image.onload = imageLoaded;
+  });
+}
+
+preloadImages();
+
+function imageLoaded() {
+  imagesLoaded++;
+  if (imagesLoaded === doodlerSpritePaths.length + 1) {
+    animate();
+  }
+}
