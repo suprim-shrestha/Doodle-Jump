@@ -60,7 +60,7 @@ function handleOrientation(e) {
     keys.left = true;
     keys.right = false;
   } else {
-    speed = 0;
+    speed = SPEED * scale;
     keys.left = false;
     keys.right = false;
   }
