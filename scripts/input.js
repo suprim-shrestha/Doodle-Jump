@@ -49,14 +49,20 @@ window.addEventListener("touchend", () => {
 // Tilt event listeners for mobile screens to control the character
 window.addEventListener("deviceorientation", handleOrientation);
 function handleOrientation(e) {
-  var tiltValue = e.gamma;
-  if (tiltValue > 10) {
+  let tiltValue = e.gamma;
+  let tiltSpeed = tiltValue / 20 >= 1 ? 1 : tiltValue / 20;
+  if (tiltValue > 3) {
+    speed = SPEED * scale * tiltSpeed;
+    console.log(speed);
     keys.right = true;
     keys.left = false;
-  } else if (tiltValue < -10) {
+  } else if (tiltValue < -3) {
+    speed = -SPEED * scale * tiltSpeed;
+    console.log(speed);
     keys.left = true;
     keys.right = false;
   } else {
+    speed = 0;
     keys.left = false;
     keys.right = false;
   }
