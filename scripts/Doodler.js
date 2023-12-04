@@ -52,10 +52,10 @@ class Doodler {
    */
   move() {
     if (keys.left) {
-      this.vx = -SPEED;
+      this.vx = -speed;
       spriteDirection = "left";
     } else if (keys.right) {
-      this.vx = SPEED;
+      this.vx = speed;
       spriteDirection = "right";
     } else {
       this.vx = 0;

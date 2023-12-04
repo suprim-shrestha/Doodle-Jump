@@ -21,6 +21,7 @@ let doodlerHeight = DEFAULT_DOODLER_HEIGHT * scale;
 let doodlerX = canvas.width / 2 - doodlerWidth / 2;
 let doodlerY = (canvas.height * 7) / 8 - doodlerHeight;
 let doodlerJumpHeight = JUMP_HEIGHT * scale;
+let speed = SPEED * scale;
 
 const doodler = new Doodler(
   doodlerX,
