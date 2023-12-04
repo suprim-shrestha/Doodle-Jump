@@ -53,12 +53,10 @@ function handleOrientation(e) {
   let tiltSpeed = tiltValue / 20 >= 1 ? 1 : tiltValue / 20;
   if (tiltValue > 3) {
     speed = SPEED * scale * tiltSpeed;
-    console.log(speed);
     keys.right = true;
     keys.left = false;
   } else if (tiltValue < -3) {
     speed = -SPEED * scale * tiltSpeed;
-    console.log(speed);
     keys.left = true;
     keys.right = false;
   } else {
