@@ -97,7 +97,10 @@ class Platform {
   }
 
   move() {
-    if (this.x <= 0 || this.x + this.width >= canvas.width - 0) {
+    if (
+      this.x <= platformOffset ||
+      this.x + this.width >= canvas.width - platformOffset
+    ) {
       this.vx *= -1;
     }
     this.x += this.vx;
